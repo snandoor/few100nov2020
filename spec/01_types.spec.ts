@@ -129,5 +129,74 @@ The End.`;
             });
         });
     });
+    describe('array literals', () => {
+        it('using them', () => {
+            const stuff = ['dogs', 'birds', 18];
 
+            const first = stuff[0];
+
+            expect(stuff.length).toBe(3);
+            stuff[2] = 'Owls';
+            expect(stuff).toEqual(['dogs', 'birds', 'Owls']);
+
+            const missing = stuff[99];
+            expect(missing).toBeUndefined();
+
+            // const someOtherArray: (string | number)[] = [];
+            const someOtherArray: Array<string | number> = [];
+            const friends: Array<string> = [];
+
+        });
+        it('using a tuple', () => {
+            const warren: [string, string, number, string] = ['Warren', 'Ellis', 58, 'Musician'];
+            const lName = warren[1];
+            const age = warren[2];
+
+        });
+        describe('tuples and objects and stuff like that', () => {
+
+            it('doing it with objects', () => {
+
+                // String FormatName(string first, string last) {... }
+                interface FormattedNameInfo { fullName: string, numberOfLetters: number }
+                function formatName(first: string, last: string): FormattedNameInfo {
+                    const name = `${last}, ${first}`;
+                    return {
+                        fullName: name,
+                        numberOfLetters: name.length
+                    }
+                }
+
+                // const fullName = formatName('Han', 'Solo');
+                // expect(fullName.fullName).toBe('Solo, Han');
+                // expect(fullName.numberOfLetters).toBe(9);
+                // object destructuring
+                // const { fullName: name, numberOfLetters: letters } = formatName('Han', 'Solo');
+                // expect(name).toBe('Solo, Han');
+                // expect(letters).toBe(9);
+
+                const result = formatName('Han', 'Solo');
+                const name = result.fullName;
+                const letters = result.numberOfLetters;
+            });
+
+            it('doing it with a tuple', () => {
+                type NameInfo = [string, number];
+                function formatName(first: string, last: string): NameInfo {
+                    const name = `${last}, ${first}`;
+                    return [name, name.length];
+                }
+
+                // const info = formatName('Han', 'Solo');
+                // expect(info[0]).toBe('Solo, Han');
+                // expect(info[1]).toBe(9);
+
+                const [name, length] = formatName('Han', 'Solo');
+                expect(name).toBe('Solo, Han');
+                expect(length).toBe(9);
+            });
+
+        });
+
+    });
 });
