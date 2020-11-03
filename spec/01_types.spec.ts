@@ -197,13 +197,13 @@ The End.`;
                 // expect(fullName.fullName).toBe('Solo, Han');
                 // expect(fullName.numberOfLetters).toBe(9);
                 // object destructuring
-                // const { fullName: name, numberOfLetters: letters } = formatName('Han', 'Solo');
-                // expect(name).toBe('Solo, Han');
-                // expect(letters).toBe(9);
+                const { fullName: name, numberOfLetters: letters } = formatName('Han', 'Solo');
+                expect(name).toBe('Solo, Han');
+                expect(letters).toBe(9);
 
-                const result = formatName('Han', 'Solo');
-                const name = result.fullName;
-                const letters = result.numberOfLetters;
+                // const result = formatName('Han', 'Solo');
+                // const name = result.fullName;
+                // const letters = result.numberOfLetters;
             });
 
             it('doing it with a tuple', () => {
