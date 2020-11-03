@@ -1,6 +1,32 @@
 describe('types', () => {
 
     describe('declaring variables and stuff', () => {
+
+        it('a little review of declaring variables', () => {
+
+            let y: any;
+            y = 'tacos';
+            expect(y).toBe('tacos');
+            y = 3.19;
+            y = (a: number, b: number) => a + b;
+            expect(y(2, 2)).toBe(4);
+
+
+
+            const zz = 'Tacos';
+
+
+
+            let someVariable: string | number;
+
+            someVariable = 'dog';
+
+            someVariable = 3.14;
+
+            // someVariable = [];
+            // someVariable = {};
+
+        });
         it('using let', () => {
             let x = 10;
 
@@ -198,5 +224,125 @@ The End.`;
 
         });
 
+    });
+    describe('object literals', () => {
+
+        it('structural typing with objects', () => {
+
+            interface MessageHavingThing { message: string }
+            function logIt(thingy: MessageHavingThing) {
+                console.log(`On ${new Date().toLocaleTimeString()} you said ${thingy.message}`);
+            }
+
+            logIt({ message: 'Call your mom' });
+
+            interface PhoneCall {
+                from: string;
+                time: string;
+                message: string;
+                returned?: boolean
+            }
+            const phoneCall: PhoneCall = {
+                from: 'Bill',
+                time: 'This morning',
+                message: 'Call Me',
+                returned: false
+            };
+
+            logIt(phoneCall);
+
+            interface SuperGroup { times: number, message: string }
+            function doThisThing(something: SuperGroup) {
+
+            }
+
+            type MathOp = (x: number, y: number) => number;
+            interface Mathable {
+                num1: number;
+                num2: number;
+                op: MathOp;
+            }
+
+            const adder: Mathable = {
+                num1: 10,
+                num2: 5,
+                op: (a, b) => a + b
+            }
+
+            // 1. Type Aliases are an alias for a data type.
+            type DateTime = string;
+
+            interface Event {
+                where: string;
+                when: DateTime
+            }
+
+            const tacoTuesday: Event = {
+                where: 'Kitchen',
+                when: new Date().toISOString()
+            }
+
+            // type Person = Employee | Contractor | Retiree;
+
+            type NumberOrString = string | number;
+
+
+
+
+        });
+
+    });
+
+    describe('function literals', () => {
+
+        it('has three ways but we use two.', () => {
+
+
+            expect(add(2, 3)).toBe(5);
+
+            // Named
+            function add(a: number, b: number): number {
+                return a + b;
+            }
+            // Anonymous functions
+            const subtract = function (a: number, b: number): number {
+                return a - b;
+            }
+
+            type MathOp = (x: number, y: number) => number;
+
+            let multiply: MathOp;
+            multiply = (a: number, b: number): number => a * b;
+            const divide: MathOp = (a: number, b: number): number => {
+                if (b === 0) {
+                    console.log('Are you trying to open a black hole!?');
+                }
+                return a / b;
+            }
+
+            const doIt = (message: string): void => console.log(message);
+
+            expect(multiply(3, 3)).toBe(9);
+            expect(subtract(10, 2)).toBe(8);
+            doIt('tacos are good');
+
+            function doMathAndDoubleIt(op: MathOp, num1: number, num2: number): number {
+                return op(num1 + num1, num2 + num2);
+            }
+
+            // Higher-ordered function - a function that takes one or more functions as arguments, and/or returns a function.
+            const result = doMathAndDoubleIt(add, 10, 5);
+            const result2 = doMathAndDoubleIt(divide, 3, 8);
+            const result3 = doMathAndDoubleIt((x, y) => x % y, 5, 1);
+
+            const weridMath = (p: number, q: number) => p * 2 + q;
+            const result4 = doMathAndDoubleIt(weridMath, 10, 2);
+            // doMathAndDoubleIt(add, 'tacos', 20); "Structural Typing"
+
+            expect(result).toBe(30);
+            expect(result2).toBe(0.375);
+            expect(result3).toBe(0);
+
+        });
     });
 });
