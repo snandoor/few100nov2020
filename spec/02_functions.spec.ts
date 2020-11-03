@@ -2,6 +2,49 @@ describe('functions', () => {
 
     describe('parameters and overloading etc.', () => {
 
+        describe('higher-ordered functions', () => {
+            // a function that takes one or more functions as arguments, or returns a function is a HOF
+            it('making a tagmaker function', () => {
+
+                function tagMaker(element: string, content: string): string {
+                    return `<${element}>${content}</${element}>`;
+                }
+
+                expect(tagMaker('h1', 'Hello')).toBe('<h1>Hello</h1>');
+                expect(tagMaker('h1', 'Goodbye')).toBe('<h1>Goodbye</h1>');
+                expect(tagMaker('p', 'Body')).toBe('<p>Body</p>');
+            });
+            it('an OOP example', () => {
+                class TagMaker {
+                    constructor(private element: string) { }
+
+                    make(content: string): string {
+                        return `<${this.element}>${content}</${this.element}>`;
+                    }
+                }
+
+                const h1Maker = new TagMaker('h1');
+                const pMaker = new TagMaker('p');
+                expect(h1Maker.make('Hello')).toBe('<h1>Hello</h1>');
+                expect(h1Maker.make('Goodbye')).toBe('<h1>Goodbye</h1>');
+                expect(pMaker.make('Body')).toBe('<p>Body</p>');
+            });
+
+            it('a functional programmer approach', () => {
+
+                function tagMaker(element: string): (content: string) => string {
+                    return (c) => `<${element}>${c}</${element}>`
+                }
+
+                const h1Maker = tagMaker('h1');
+                const pMaker = tagMaker('p');
+
+                expect(h1Maker('Hello')).toBe('<h1>Hello</h1>');
+                expect(h1Maker('Goodbye')).toBe('<h1>Goodbye</h1>');
+                expect(pMaker('Body')).toBe('<p>Body</p>');
+            });
+
+        });
         it('destructuring arguments', () => {
 
             let seatType: 'WINDOW' | 'AISLE' | 'MIDDLE';
