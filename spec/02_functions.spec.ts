@@ -1,3 +1,7 @@
+import { isEven, TagMaker } from '../src/utils';
+
+
+
 describe('functions', () => {
 
     describe('parameters and overloading etc.', () => {
@@ -15,14 +19,9 @@ describe('functions', () => {
                 expect(tagMaker('p', 'Body')).toBe('<p>Body</p>');
             });
             it('an OOP example', () => {
-                class TagMaker {
-                    constructor(private element: string) { }
 
-                    make(content: string): string {
-                        return `<${this.element}>${content}</${this.element}>`;
-                    }
-                }
-
+                if (isEven(2)) { }
+                const bMaker = new TagMaker('b');
                 const h1Maker = new TagMaker('h1');
                 const pMaker = new TagMaker('p');
                 expect(h1Maker.make('Hello')).toBe('<h1>Hello</h1>');
@@ -169,3 +168,77 @@ function getRandomInt(min: number, max: number): number {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+describe('common array methods', () => {
+    const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+    it('has a way to look at just each member of an array.', () => {
+        numbers.forEach((e, i, c) => console.log({ e, i, c }));
+
+    });
+    describe('array methods that create new arrays', () => {
+
+        it('filtering', () => {
+            // like Select in C# LINQ
+            const evens = numbers.filter(isEven); // do you have that function?
+            // const evens = numbers.filter(n => isEven(n));
+            expect(evens).toEqual([2, 4, 6, 8]);
+            expect(numbers).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]); // look ma! no mutation
+
+            const friends = ['Bill', 'Amy', 'Jessika', 'Billy', 'Sean'];
+            const newFriends = friends.filter(f => f !== 'Billy');
+            expect(newFriends).toEqual(['Bill', 'Amy', 'Jessika', 'Sean']);
+        });
+        it('mutating each element to create a new elements', () => {
+
+            // C# Select LINQ
+            const doubled = numbers.map(n => n * 2);
+            expect(doubled).toEqual([2, 4, 6, 8, 10, 12, 14, 16, 18]);
+
+            const x = numbers.map(n => isEven(n) ? 'Even' : 'Odd');
+            // expect(x).toEqual(['Odd', 'Even', 'Odd'])
+        });
+
+    });
+    describe('methods that return a single (scalar) value', () => {
+        it('checking the membership of an arry', () => {
+            const allEven = numbers.every(isEven);
+            expect(allEven).toBe(false);
+            const someEven = numbers.some(isEven);
+            expect(someEven).toBe(true);
+        });
+        it('reduce - "boil it down to a single value"', () => {
+            const sum = numbers.reduce((s, n) => s + n);
+            expect(sum).toBe(45);
+            const sum2 = numbers.reduce((s, n) => s + n, 100);
+            expect(sum2).toBe(145);
+        });
+
+    });
+    describe('practice', () => {
+        it('try it', () => {
+
+            interface Vehicle {
+                vin: string;
+                make: string;
+                model: string;
+                mileage: number;
+            }
+            const vehicles: Vehicle[] = [
+                { vin: '8888', make: 'Chevy', model: 'Bolt', mileage: 18_540 },
+                { vin: '8938j3783', make: 'Honda', model: 'Pilot', mileage: 52_123 },
+                { vin: '38938', make: 'Dodge', model: 'RAM', mileage: 82_233 }
+            ];
+
+            // your code here.
+            // a high-mielage vehicle is a vehcile with over 50_000 miles on it.
+            const highMileageVehicles = vehicles // [ {}, {}, {}]
+                .filter(v => v.mileage > 50_000)// [ {}, {}]
+                .map(v => `${v.make} ${v.model}`);// [ '', '']
+
+            expect(highMileageVehicles).toEqual(['Honda Pilot', 'Dodge RAM']);
+        });
+
+    });
+
+});
