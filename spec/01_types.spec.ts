@@ -228,11 +228,22 @@ The End.`;
     describe('object literals', () => {
 
         it('a couple details on object literals', () => {
+            interface ArtistInfo {
+                firstName: string;
+                lastName: string;
+                birthYear: number;
+            };
             interface Song {
                 title: string;
                 artist: string;
                 lastPlayed?: string;
-                [key: string]: any
+                year?: number;
+                [key: string]: any,
+                artistInfo?: ArtistInfo
+            }
+
+            interface Album {
+                songs: Song[]
             }
 
             const rof: Song = {
@@ -245,7 +256,12 @@ The End.`;
             const bg: Song = {
                 title: 'Bad Guy',
                 artist: 'Billie Eilish',
-                genre: 'POP'
+                genre: 'POP',
+                artistInfo: {
+                    firstName: 'Billie',
+                    lastName: 'Eilish',
+                    birthYear: 2012
+                }
             };
 
             expect(bg.genre).toBe('POP');
