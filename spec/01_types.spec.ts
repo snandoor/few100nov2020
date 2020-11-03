@@ -227,6 +227,68 @@ The End.`;
     });
     describe('object literals', () => {
 
+        it('a couple details on object literals', () => {
+            interface Song {
+                title: string;
+                artist: string;
+                lastPlayed?: string;
+                [key: string]: any
+            }
+
+            const rof: Song = {
+                title: 'Renegades of Funk',
+                artist: 'Rage agains thte Machine',
+                lastPlayed: 'This morning',
+                producedBy: 'Joe Smith'
+            }
+
+            const bg: Song = {
+                title: 'Bad Guy',
+                artist: 'Billie Eilish',
+                genre: 'POP'
+            };
+
+            expect(bg.genre).toBe('POP');
+        });
+        it('basic object literals', () => {
+            interface Movie {
+                title: string;
+                director: string;
+                yearReleased: number;
+            }
+            const thor: Movie = {
+                title: 'Thor Ragnorak',
+                director: 'Taikia Waititi',
+                yearReleased: 2017
+            }
+
+            thor.yearReleased = 2016;
+            interface Song {
+                artist: string;
+                title: string;
+                album: string;
+            };
+            const song: Song = {
+                artist: 'David Bowie',
+                title: 'Starman',
+                album: 'Ziggy Stardust'
+            }
+
+            // thor.yearreleased = 2018;
+            const fwwm: Movie = {
+                title: 'Twin Peaks: Fire Walk With Me',
+                director: 'Lynch',
+                yearReleased: 1992
+            }
+            showInfo(thor);
+            showInfo(fwwm);
+            showInfo({ title: 'The Empire Strikes Back', yearReleased: 1983, director: 'Kershner' });
+
+            function showInfo(movie: Movie) {
+                console.log(`That is ${movie.title} by ${movie.director} released in ${movie.yearReleased}`);
+            }
+
+        });
         it('structural typing with objects', () => {
 
             interface MessageHavingThing { message: string }
